@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="by3.js"></script>
+  </head>
+  <body>
+    <h1>multiply by 3</h1>
+
+    <input type="text" id="inputNumber" placeholder="Enter a number"></input>
+    <button onClick="run()">multiply</button>
+    <p id="result"></p>
+
+    <script>
+    const p = document.getElementById("result");
+
+    function run() {
+
+      const inputNumber = parseInt(document.getElementById("inputNumber").value);
+      const result = Module.ccall(
+        "myFunction", // name of C function
+        "number", // return type
+        ["number"], // argument types
+        [inputNumber], // arguments
+      );
+      p.innerText = result;
+      console.log(result);
+    }
+
+    </script>
+  </body>
+</html>
