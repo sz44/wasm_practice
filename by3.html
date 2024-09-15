@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiply by 3</title>
+    <script src="by3.js"></script>
+</head>
+<body>
+    <h1>Multiply a Number by 3</h1>
+    
+    <input type="number" id="numberInput" placeholder="Enter a number">
+    <button id="multiplyBtn">Multiply</button>
+
+    <p id="result"></p>
+
+    <script>
+        // Wait for the runtime to be fully initialized
+        Module.onRuntimeInitialized = function() {
+            console.log('WASM runtime initialized.');
+
+            // Add click event handler after runtime initialization
+            document.getElementById('multiplyBtn').addEventListener('click', function() {
+                const inputNumber = parseInt(document.getElementById('numberInput').value, 10);
+
+                if (isNaN(inputNumber)) {
+                    document.getElementById('result').innerText = 'Please enter a valid number';
+                    return;
+                }
+
+                // Call the WASM function using ccall
+                const result = Module.ccall(
+                    'myFunction',  // C function name
+                    'number',      // Return type
+                    ['number'],    // Argument types
+                    [inputNumber]  // Arguments
+                );
+
+                document.getElementById('result').innerText = `Result: ${result}`;
+            });
+        };
+
+        // Add a basic log to track initialization
+        console.log('Waiting for WASM runtime...');
+    </script>
+</body>
+</html>
+
